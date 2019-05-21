@@ -1,0 +1,63 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-family: arial, helvetica, sans-serif;
+	color: #ffffff;
+	background: rgba(0, 0, 0, .1);
+	height: 100%;
+}
+.container{
+	width: 100%;
+}
+.nav{
+	width: 100%;
+	background: rgba(255, 255, 255, 0.2);
+	position: fixed;
+}
+.nav ul{
+	display: flex;
+	padding: 15px;
+	justify-content: center;
+	list-style: none;
+	margin: 0 auto;
+}
+.nav ul li{
+	padding: 0 20px;
+}
+.nav a{
+	text-decoration: none;
+	color: #fff;
+}
+.nav a:hover{
+	color: skyblue;
+}
+section{
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+section h1{
+	font-size: 2.5rem;
+	margin-bottom: 20px;
+}
+section p{
+	width: 55%;
+	font-size: 1.125rem;
+}
+section#Home{
+	background: url("https://images.pexels.com/photos/34140/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center/cover;
+}
+section#About{
+	background: url("https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500") no-repeat center center/cover;
+}
+section#Service{
+	background: url("https://images.pexels.com/photos/270637/pexels-photo-270637.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center center/cover;
+}
+section#Contact{
+	background: url("https://images.pexels.com/photos/209151/pexels-photo-209151.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500") no-repeat center center/cover;
+}
+

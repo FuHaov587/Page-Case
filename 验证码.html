@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        canvas{
+            display: block;
+            border: 1px solid black;
+            margin: 50px auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="canvas" width="120px" height="40px"></canvas>
+    <script>
+        // 任意区间随机小数
+        function rnd(min, max){
+            return Math.random()*(max-min)+min
+        }
+        // 颜色
+        function darkColor(){
+            return Math.round(rnd(0,120))
+        }
+        function lightColor(){
+        	return Math.round(rnd(130,255))
+        }
+        let canvas = document.querySelector('canvas')
+        let ctx = canvas.getContext('2d')
+        let str = 'qwertyuioplkjhgfdsazxcvbnm'
+        let code = ''			// 生成的4位验证码
+        createCode(canvas.width,canvas.height,4)
+        function createCode(wid,hei,num){
+       		pointer(canvas.width,canvas.height,50)
+        	for(let i = 0; i < num; i++){
+        		let index = Math.round(rnd(0,str.length-1))
+        		canvas.style.background = 'rgb('+lightColor()+','+lightColor()+','+lightColor()+')'
+        		code += str[index]
+        		ctx.save()
+        		ctx.beginPath()
+        		ctx.fillStyle = 'rgb('+darkColor()+','+darkColor()+','+darkColor()+')'
+        		ctx.font = 'bold '+ Math.round(rnd(14,24)) +'px Courier New'
+        		ctx.fillText(str[index], (wid/num)*i+rnd(0,10), rnd(15,hei-10))
+        		ctx.fill()
+        		ctx.restore()
+        	}
+        	//line(wid,hei)
+        }
+        
+        function line(wid,hei){
+        	let l = Math.round(1,4)
+        	for(let i = 0; i < 5; i++){
+        		let x1 = Math.round(rnd(10,wid-20)), y1 = Math.round(rnd(10,hei-10))
+        		let x2 = Math.round(rnd(10,wid-20)), y2 = Math.round(rnd(10,hei-10))
+        		ctx.beginPath()
+        		ctx.moveTo(Math.round(rnd(10,wid-20)),Math.round(rnd(10,hei-10)))
+        		ctx.arcTo(x1,y1,x2,y2,20)
+        		ctx.lineWidth = 2
+        		ctx.strokeStyle = 'rgb('+lightColor()+','+lightColor()+','+lightColor()+')'
+        		ctx.stroke()
+        	}
+        }
+        // 点
+       	function pointer(wid,hei,num){
+       		for(let i = 0; i < num; i++ ){
+       			ctx.beginPath()
+       			ctx.fillStyle = 'rgb('+lightColor()+','+lightColor()+','+lightColor()+')'
+       			ctx.arc(rnd(0,wid),rnd(0,hei),rnd(2,4),0,2*Math.PI)
+       			ctx.fill()
+       		}
+       	}
+
+    </script>
+</body>
+</html>

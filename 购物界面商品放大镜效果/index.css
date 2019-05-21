@@ -1,0 +1,64 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+body{
+	overflow: hidden;
+}
+.box{
+	width: 400px;
+	height: 490px;
+	border: 1px solid #000;
+	margin: 100px auto;
+	position: relative;
+}
+.pic{
+	width: 100%;
+	height: 400px;
+	background: yellow;
+	margin-bottom: 15px;
+	position: relative;
+}
+.pic img{
+	width: 400px;
+	display: block;
+}
+.pic .cover{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 150px;
+	background: url("images/a.png");
+}
+.pic:hover .cover{
+	display: block;
+}
+.list{
+	display: flex;
+}
+.list li{
+	margin: auto;
+	cursor: pointer;
+}
+.list li img{
+	display: block;
+	width: 60px;
+	height: 60px;
+}
+.list .current{
+	border: 3px solid red;
+}
+.show{
+	display: none;
+	width: 400px;
+	height: 400px;
+	border: 1px solid #000;
+	position: absolute;
+	top: 0;
+	left: 400px;
+	background-image: url("images/1.jpg");
+	background-size: 267%;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>机器猫</title>
+		<style type="text/css">
+			body{
+				overflow: hidden;
+			}
+			#canvas{
+				display: block;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="550" height="550"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			//脸
+			ctx.arc(252, 252, 250, 0, 360 * Math.PI / 180);
+			ctx.fillStyle = "#07BEEA";
+			ctx.fill();
+			ctx.strokeStyle="#333";
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(160, 450);
+			ctx.bezierCurveTo(0, 400, 0, 110, 210, 115);
+			ctx.lineTo(290, 115);
+			ctx.bezierCurveTo(500, 110, 500, 400, 340, 450);
+			ctx.bezierCurveTo(280, 470, 220, 470, 160, 450);
+			ctx.fillStyle = "#FFF";
+			ctx.fill();
+			ctx.stroke();
+			//眼睛
+			ctx.beginPath();
+			ctx.moveTo(150, 150);
+			ctx.lineTo(150, 100);
+			ctx.bezierCurveTo(160, 50, 240, 50, 250, 100);
+			ctx.lineTo(250, 150);
+			ctx.bezierCurveTo(240, 200, 160, 200, 150, 150);
+			ctx.moveTo(250, 150);
+			ctx.lineTo(250, 100);
+			ctx.bezierCurveTo(260, 50, 340, 50, 350, 100);
+			ctx.lineTo(350, 150);
+			ctx.bezierCurveTo(340, 200, 260, 200, 250, 150);
+			ctx.fillStyle = "#FFF";
+			ctx.fill();
+			ctx.stroke();
+			//眼珠
+			ctx.beginPath();
+			ctx.arc(225, 155, 10, 0, 360 * Math.PI / 180);
+			ctx.arc(275, 155, 10, 0, 360 * Math.PI / 180);
+			ctx.fillStyle = "#333";
+			ctx.fill();
+			//鼻子
+			ctx.beginPath();
+			ctx.arc(250, 197, 25, 0, 360 * Math.PI / 180);
+			ctx.fillStyle = "#C93E00";
+			ctx.fill();
+			ctx.stroke();
+			//白色渐变
+			ctx.beginPath();
+			ctx.arc(260, 190, 10, 0, 360 * Math.PI / 180);
+			var grd = ctx.createRadialGradient(260, 190, 2, 260, 190, 10);
+			grd.addColorStop(0, "#FFF");
+			grd.addColorStop(1, "#C93E00");
+			ctx.fillStyle = grd;
+			ctx.fill(); 
+			//嘴巴
+			ctx.beginPath();
+			ctx.moveTo(250, 222);
+			ctx.lineTo(250, 395);
+			ctx.moveTo(100, 320);
+			ctx.bezierCurveTo(180, 420, 320, 420, 400, 320);
+			ctx.lineWidth = 3;
+			ctx.stroke();
+			//胡子
+			ctx.beginPath();
+			ctx.moveTo(80, 200);
+			ctx.lineTo(180, 220);
+			ctx.moveTo(80, 245);
+			ctx.lineTo(180, 245);
+			ctx.moveTo(80, 290);
+			ctx.lineTo(180, 270);
+			ctx.moveTo(320, 220);
+			ctx.lineTo(420, 200);
+			ctx.moveTo(320, 245);
+			ctx.lineTo(420, 245);
+			ctx.moveTo(320, 270);
+			ctx.lineTo(420, 290);
+			ctx.stroke();
+		</script>
+	</body>
+</html>

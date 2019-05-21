@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="nav">
+				<ul>
+					<li><a href="#Home">主页</a></li>
+					<li><a href="#About">关于我们</a></li>
+					<li><a href="#Service">服务</a></li>
+					<li><a href="#Contact">联系我们</a></li>
+				</ul>
+			</nav>
+			<section id="Home">
+				<h1>欢迎来到浩爺精品制作集</h1>
+				<p>Someone said I didn't initialize???If you must initialize the variable love, then the variable type is probably her name</p>
+			</section>
+			<section id="About">
+				<h1>欢迎来到浩爺精品制作集</h1>
+				<p>Someone said I didn't initialize???If you must initialize the variable love, then the variable type is probably her name</p>
+			</section>
+			<section id="Service">
+				<h1>欢迎来到浩爺精品制作集</h1>
+				<p>Someone said I didn't initialize???If you must initialize the variable love, then the variable type is probably her name</p>
+			</section>
+			<section id="Contact">
+				<h1>欢迎来到浩爺精品制作集</h1>
+				<p>Someone said I didn't initialize???If you must initialize the variable love, then the variable type is probably her name</p>
+			</section>
+		</div>
+		
+		
+		<script>
+			$(function(){
+				$('.nav a').click(function(){
+					if(this.hash != ''){
+						const hash = this.hash
+						$('html,body').animate({
+							scrollTop: $(hash).offset().top
+						})
+						return false
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

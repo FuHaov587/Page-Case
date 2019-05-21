@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>黑客帝国代码雨</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .can{
+            display: block;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="can"></canvas>
+    <script>
+    	//记录Y下次出现的位置、不清除画布重叠效果、添加透明层
+        window.onload = function () {
+            var canvas = document.querySelector(".can");
+            var ctx = canvas.getContext('2d');
+            var w, h;
+            
+            (function(){
+            	window.onresize = arguments.callee;
+            	w = canvas.width = window.innerWidth;
+            	h = canvas.height = window.innerHeight;
+            })();
+            
+            let dist = 16;
+
+            let arr = [];
+            for(let i = 0; i < 100;i++){
+            	arr[i] = 0;
+            }
+			let texts = [];
+            for (var i = 97; i <= 122; i++) {
+            	texts.push(String.fromCharCode(i));
+	        }
+            function draw(){
+            	ctx.fillStyle = "rgba(0,0,0,0.05)";
+            	ctx.fillRect(0,0,w,h);
+            	
+            	ctx.fillStyle = "#0f0";
+            	ctx.font = 14 + 'px arial';
+	            for(let i = 0; i < arr.length; i ++){
+	           		ctx.fillText(texts[rnd(0,texts.length-1)],i*dist,arr[i]*dist);
+	           		if(rnd(10,100) >90){
+	            		arr[i] = 0;
+	            	}
+            		arr[i]++;
+	            }
+            }
+            setInterval(draw,30);
+            
+            function rnd(min, max){
+            	return Math.round(Math.random() * (max - min) + min);
+            }
+            
+
+         };
+    </script>
+</body>
+</html>

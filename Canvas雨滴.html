@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			canvas{
+				background: #000000;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="" height=""></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var w,h;
+			~~function setSize(){
+				window.onresize = arguments.callee;
+				w = canvas.width = window.innerWidth,
+				h = canvas.height = window.innerHeight;
+			}();
+			
+			/*
+				ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+				ctx.fillRect(0, 0, w, h);
+			},1000/60); */
+			function random(min,max){
+				return Math.random() * (max-min) + min;
+			}
+			var aRain = [];
+			function Rain(){};
+			
+			Rain.prototype = {
+				init: function(){
+					this.x = random(0,w);
+					this.y = 0;
+					this.vY = random(4,5);
+					this.h = random(0.8 * h, 0.9 * h);  //雨滴停止高度
+					this.r = 1;  //雨滴初始半径大小
+					this.vR = 1; //雨滴半径扩大速度
+					
+				},
+				draw: function(){
+					if(this.y < this.h){
+						ctx.beginPath();
+						ctx.fillStyle = "#31f7f7";
+						ctx.fillRect(this.x, this.y, 2, 10);
+					}else{
+						ctx.beginPath();
+						ctx.strokeStyle = "#31f7f7";
+						ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+						ctx.stroke();
+					}
+				},
+				move: function(){
+					if(this.y < this.h){
+						this.y += this.vY;   //雨滴每秒钟下降4~5
+					}else{
+						if(this.r < 100){
+							this.r += this.vR;
+						}else{
+							this.init();
+						}
+					}
+					this.draw();
+				}
+			};
+			function createRain(num){
+				for(var i = 0; i < num; i++){
+					setTimeout(function(){
+						var rain = new Rain();
+						rain.init();
+						rain.draw();
+						aRain.push(rain);
+					},200 * i);
+					
+				}
+			}
+			createRain(25);
+			setInterval(function(){
+				ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+				ctx.fillRect(0, 0, w, h);
+				for(var item of aRain){
+					item.move();
+				}
+			},1000/60);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: rgba(0,0,0,.4);
+		}
+		.banner{
+			position: relative;
+			width: 1240px;
+			height: 450px;
+			margin: 150px auto;
+			padding: 10px;
+			background: #fff;
+		}
+		.banner a{
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: url(./images/banner0.jpg) center center;
+			z-index: 1;
+			overflow: hidden;
+		}
+		.banner a span{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			background: rgba(0,0,0,.1);
+			border-radius: 50%;
+		}
+		.btn button{
+			position: absolute;
+			top: 50%;
+			width: 60px;
+			height: 120px;
+			margin-top: -60px;
+			color: #fff;
+			background: rgba(0,0,0,.2);
+			text-align: center;
+			line-height: 120px;
+			font-size: 35px;
+			border: none;
+			outline: none;
+			z-index: 2;
+			cursor: pointer;
+		}
+		.btn button:hover{
+			background: rgba(0,0,0,.5);
+		}
+		.btn button:nth-child(2){
+			right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+		<a href="javascript:;"></a>
+		<div class="btn">
+			<button>&lt;</button>
+			<button>&gt;</button>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		
+		$(function(){
+			var bW = $('.banner').width(),
+					bH = $('.banner').height()
+			var maxW = Math.ceil(Math.sqrt(bW*bW+bH*bH))
+			var size = 10
+			var step = Math.ceil(maxW/10)
+			var imgs = ['./images/banner0.jpg','./images/banner1.jpg','./images/banner2.jpg','./images/banner3.jpg']
+			var cur = 0
+			var onOff = true
+			var timer = null
+			$('.btn button:eq(0)').click(function(){
+				if(onOff){
+					onOff = !onOff
+					circle(function(){
+						cur--
+					})
+				}
+			})
+			$('.btn button:eq(1)').click(function(){
+				if(onOff){
+					onOff = !onOff
+					circle(function(){
+						cur++
+					})
+				}
+			})
+
+
+			autoPlay()
+
+			function autoPlay(){
+				timer =setInterval(function () {
+					$('.btn button:eq(1)').click()
+				},2000)
+			}
+
+			$('.banner a,.btn button').hover(function(){
+				clearInterval(timer)
+			},function () {
+				autoPlay()
+			})
+
+			function circle(fun){
+
+				$('.banner a').html('')
+
+				for(var i = 0; i < size; i++){
+					var w = maxW - (step * i)
+					var $span = $('<span></span>').css({
+						width: w,
+						height: w,
+						marginTop: -w/2,
+						marginLeft: -w/2,
+						background: 'url(' + imgs[cur] + ') center center',
+						transition: 'all .8s ' + (i*70) + 'ms',
+					})
+					$('.banner a').append($span)
+				}
+				fun()
+				cur = (cur + imgs.length) % imgs.length
+				$('.banner a').css({
+					background: 'url('+ imgs[cur] + ') center center' 
+				})
+				setTimeout(function(){
+					var dir = 1;
+					$('.banner span').each(function(index){
+						if(index%2==1) dir = 1
+						else dir = -1
+
+						$(this).css({
+							opacity: 0,
+							transform: 'rotate(' + (dir*180) + 'deg)'
+						})
+					})
+				},200)
+				setTimeout(function () {
+					onOff = !onOff
+				},1500)
+			}
+		})
+		
+	</script>
+
+
+</body>
+</html>

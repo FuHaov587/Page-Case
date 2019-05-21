@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>丝带导航</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style:none;
+		}
+		body{
+			background: #282923;
+		}
+		.nav{
+			position: relative;
+			width: 560px;
+			height: 50px;
+			background: #fff;
+			margin: 100px auto;
+		}
+		.nav::before{
+			content: '';
+			position: absolute;
+			top: 7px;
+			left: -18px;
+			width: 36px;
+			height: 36px;
+			background: #282923;
+			transform: rotate(45deg);
+		}
+		.nav::after{
+			content: '';
+			position: absolute;
+			right: -18px;
+			top: 7px;
+			width: 36px;
+			height: 36px;
+			background: #282923;
+			transform: rotate(45deg);
+		}
+		.nav ul{
+			display: flex;
+			width: 500px;
+			height: 100%;
+			margin: 0 auto;
+		} 
+		.nav ul li{
+			margin: auto;
+			line-height: 50px;
+			font-size: 24px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="nav">
+		<ul>
+			<li>JQuery</li>
+			<li>Python</li>
+			<li>C/C++</li>
+			<li>PHP</li>
+			<li>JS</li>
+		</ul>
+	</div>
+</body>
+</html>

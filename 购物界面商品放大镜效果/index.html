@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品放大镜效果</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div class="box">
+		<div class="pic">
+			<img src="images/1.jpg">
+			<div class="cover"></div>
+		</div>
+		<ul class="list">
+			<li><img src="images/1.jpg" class="current"></li>
+			<li><img src="images/2.jpg"></li>
+			<li><img src="images/3.jpg"></li>
+			<li><img src="images/4.jpg"></li>
+			<li><img src="images/5.jpg"></li>
+		</ul>
+
+		<div class="show"></div>
+	</div>
+	<script>
+		window.onload = function(){
+			var images = document.querySelectorAll(".list li img"),
+				bigImg = document.querySelector(".pic img");
+			var show = document.querySelector('.show');
+
+			for(let i = 0; i < images.length; i++){
+				images[i].onmouseenter = function(){
+					images.forEach( function(item) {
+						item.className = '';
+					});
+					images[i].className = 'current';
+					bigImg.src = this.getAttribute('src');
+					show.style.backgroundImage = 'url('+this.getAttribute('src')+')';
+				};
+			}
+
+			var pic = document.querySelector('.pic'),
+				cover = document.querySelector('.cover');
+
+			pic.onmousemove = function(e){
+				//移动时x,y坐标
+				var x = e.clientX,
+					y = e.clientY,
+					//盒子距离浏览器距离
+					cX = pic.getBoundingClientRect().left,
+					cY = pic.getBoundingClientRect().top;
+				// 鼠标距离盒子距离  并将点移到cover中心
+				var dX = x - cX - 75,
+					dY = y - cY - 75;
+
+				if(dX < 0)  dX = 0;
+				
+				if(dY < 0)  dY = 0;
+				
+				// 250 = pic.width - cover.width
+				if(dX >= 250) dX = 250; 
+
+				if(dY >= 250) dY = 250;
+				show.style.backgroundPosition = (dX / 250 * 100) + '% ' + (dY / 250 *100) + '%';
+				cover.style.left = dX + 'px';
+				cover.style.top = dY + 'px';
+			}
+
+			pic.onmouseenter = function(){
+				show.style.display = 'block';
+			};
+
+			pic.onmouseleave = function(){
+				show.style.display = 'none';
+			};
+		};
+	</script>
+</body>
+</html>

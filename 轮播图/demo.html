@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      background: rgba(0, 0, 0, .4);
+    }
+    .banner{
+      position: relative;
+      width: 590px;
+      height: 470px;
+      padding: 50px 70px;
+      border: 1px solid yellow;
+      margin: 100px auto;
+      box-shadow: 0 0 5px #f6f;
+      border-radius: 5px;
+    }
+    .banner .pic{
+      width: 590px;
+      height: 470px;
+      perspective: 800px;
+    }
+
+    .banner .pic ul{
+      position: absolute;
+      width: 590px;
+      height: 470px;
+      box-shadow: 0 0 5px #000;
+      transform-style: preserve-3d;
+      z-index: -1;
+    }
+    .banner .pic ul.now{
+      z-index: 2;
+    }
+    .banner .pic ul.next{
+      z-index: 1;
+    }
+    
+    .pic ul li{
+      position: absolute;
+      list-style-type: none;
+      /*box-shadow: 0 0 1px #ffc;*/
+      text-align: center;
+      color:white;
+      font-size: 22px;
+      transform: translate(0px,0px) rotateX(0deg);
+      transition: 2s transform;
+    }
+
+    .pic ul li.on{
+      transform: translate(-50px,-50px) rotateX(720deg);
+      box-shadow: 0 0 5px #000;
+    }
+    .pic ul li.remove{
+      transform: translate(0px,0px) rotateX(0deg);
+      
+    }
+    .pic .list1 li{
+      background-image: url(./images/01.webp);
+    }
+    .pic .list2 li{
+      background-image: url(./images/02.jpg);
+    }
+    .pic .list3 li{
+      background-image: url(./images/03.webp);
+    }
+    .pic .list4 li{
+      background-image: url(./images/04.webp);
+    }
+    .pic .list5 li{
+      background-image: url(./images/05.webp);
+    }
+    .btn div{
+      width: 40px;
+      height: 69px;
+      position: absolute;
+      top: 50%;
+      margin-top: -35px;
+      font-size: 30px;
+      padding: 5px 8px;
+      background: rgba(0,0,0,.4);
+      cursor: pointer;
+      text-align: center;
+      line-height: 69px;
+      color: #fff;
+    }
+    .btn .left{
+      left: 10px;
+    }
+    .btn .right{
+      right: 10px;
+    }
+    }
+  </style>
+  <script src="./jQuery-1.24.4.js"></script>
+</head>
+<body>
+  <div class="banner">
+    <div class="pic">
+      <ul class="list1 now"></ul>
+      <ul class="list2"></ul>
+      <ul class="list3"></ul>
+      <ul class="list4"></ul>
+      <ul class="list5"></ul>
+    </div>
+
+    <div class="btn">
+      <div class="left">&lt;</div>
+      <div class="right">&gt;</div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      let $ul = $('.pic ul')
+
+      let $btn = $('.btn div')
+
+      let onOff = true
+      let ulIndex = 0
+
+      let numX = 10,numY = 7
+      // ul宽高
+      let ulW = $ul.width(),
+          ulH = $ul.height()
+      let $li;
+      $ul.each(function(){
+        let s = ''
+        for (let i = 0; i < numX * numY; i++) {
+          s += '<li></li>'
+        }
+        $(this).append(s)
+      })
+      $li = $('.pic ul li')
+
+      // 每个小块的宽高 大ul宽/个数
+      let liW = ulW/numX,
+          liH = ulH/numY
+      $li.css({
+        width: liW + 'px',
+        height: liH + 'px'
+      })
+      $li.each(function(i){
+        i %= numX * numY
+        let iX = i % numX,
+            iY = parseInt(i/numX)
+        this.x = iX;
+        this.y = iY;
+        //$(this).html(iX+','+iY)
+        $(this).css({
+          width: liW + 'px',
+          height: liH + 'px',
+          backgroundPosition: -(liW*iX) + 'px ' + -(liH*iY) + 'px',
+          left: liW*iX + 'px',
+          top: liH*iY + 'px'
+        })
+      })
+
+
+      $btn.click(function(){
+
+        if(onOff){
+          onOff = !onOff
+          let index = $(this).index()
+          
+          if( index ){
+            // 右按钮
+            $ulLi = $ul.eq(ulIndex).find('li')
+            zIndex()
+            ulIndex++
+            ulIndex %= $ul.length
+            let sum = numX-1 + numY-1
+            let timer = setInterval(function(){
+              $ulLi.each(function(){
+                  if(this.x + this.y == sum){
+                    // $(this).hide()
+                    $(this).addClass('on').fadeOut(2000)
+                  }                
+                })
+                sum --;
+                if(sum<0){
+                  clearInterval(timer)
+                  setTimeout(function(){
+                    onOff = !onOff
+                  },2000)
+                }
+            }, 50)
+          }else{
+            ulIndex--
+            if(ulIndex < 0) ulIndex = $ul.length - 1
+            let sum  = 0;
+            $ulLi = $ul.eq(ulIndex).find('li')
+
+            let timer = setInterval(function(){
+              $ulLi.each(function(){
+                if(this.x + this.y == sum){
+                  $(this).removeClass('on').addClass('remove').fadeIn(2000)
+                }
+              })
+              sum++
+              if(sum> numX-1+numY-1){
+                clearInterval(timer)
+                setTimeout(function(){
+                  onOff = !onOff
+                },2000)
+              }
+            },50)
+          }
+        }
+      })
+
+      function zIndex(){
+        let nextIndex = ulIndex + 1
+        nextIndex %= $ul.length
+        $ul.eq(ulIndex).addClass('now').siblings().removeClass('now')
+        $ul.eq(nextIndex).addClass('next').siblings().removeClass('next')
+        $ul.eq(nextIndex).find('li').removeClass('on').show()
+      }
+
+
+    })
+  </script>
+</body>
+</html>

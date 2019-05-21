@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#canvas{
+				display: block;
+				background:black;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<script type="text/javascript">
+			var canvas = document.querySelector("#canvas");
+			var ctx = canvas.getContext('2d');
+			var w, h;
+			var num = 250;     //创建粒子的数量
+			var data = [];	   //存储每个粒子的属性
+			
+			function random(min, max){
+				return Math.random()*(max-min)+min;
+			}
+			
+			function init(){
+				w = canvas.width = window.innerWidth;
+				h = canvas.height = window.innerHeight;
+				for(var i = 0; i < num; i++){
+					data[i] = {
+						//给每个粒子初始 圆心位置(x, y轴坐标点) 和 '速度值' (控制运动方向)
+						x: random(0, w),		
+						y: random(0, h),
+						vX: random(-0.6, 0.6),
+						vY: random(-0.6, 0.6)
+					}
+					//把初始250个粒子创建出来
+					draw(data[i].x, data[i].y);
+				}
+			}
+			init();
+			
+			//画圆(创建粒子)  方法
+			function draw(x,y){
+				ctx.beginPath();
+				ctx.fillStyle = "white";
+				ctx.arc(x, y, 4, 0, 2*Math.PI);
+				ctx.fill();
+			}
+			//开始运动
+			setInterval(function(){
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				for(var i = 0; i < num; i++){
+					//每个粒子x,y轴加上"速度值"进行运动
+					data[i].x += data[i].vX;
+					data[i].y += data[i].vY;
+					
+					//检测粒子的位置,到达画布边界"速度值" 取反   达到反弹效果
+					if(data[i].x < 0 || data[i].x > w) data[i].vX = -data[i].vX;
+					if(data[i].y < 0 || data[i].y > h) data[i].vY = -data[i].vY;
+					draw(data[i].x,data[i].y);
+					
+					//i 代表上一个圆  j = i+1 代表下一个圆
+					//  当满足一定条件两圆心之间进行连线
+					for(var j = i + 1; j < num; j++){
+						if(Math.pow(data[i].x - data[j].x,2) + Math.pow(data[i].y - data[j].y,2) <= 40*80){
+							drawLine(data[i].x, data[i].y, data[j].x, data[j].y);
+						}
+					}
+				}
+			},1000/60)
+			
+			//连线方法    传入前后两个圆心坐标
+			function drawLine(mX, mY, lX, lY){
+				var color = ctx.createLinearGradient(mX, mY, lX, lY);//创建线性渐变
+				color.addColorStop(0, "#369");
+				color.addColorStop(1, "#333");
+				
+				ctx.beginPath();
+				ctx.strokeStyle = color;
+				ctx.lineWidth = 1.5;
+				ctx.moveTo(mX, mY);
+				ctx.lineTo(lX, lY);
+				ctx.stroke();
+			}		
+		</script>
+	</body>
+</html>
